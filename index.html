@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra se você pode fazer a Cirurgia Bariátrica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .criteria {
+            margin-top: 20px;
+        }
+        .criteria input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Descubra se você pode fazer a Cirurgia Bariátrica</h1>
+    <p>Preencha seu peso e altura para calcular seu IMC e verificar se você atende aos critérios iniciais.</p>
+    
+    <div class="form-group">
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" placeholder="Ex.: 100">
+    </div>
+    <div class="form-group">
+        <label for="altura">Altura (m):</label>
+        <input type="number" id="altura" step="0.01" placeholder="Ex.: 1.70">
+    </div>
+    <button onclick="calcularIMC()">Calcular</button>
+    
+    <div id="resultado" class="result"></div>
+    
+    <div id="criterios" class="criteria" style="display: none;">
+        <h2>Critérios Adicionais</h2>
+        <p>Selecione se você possui alguma das condições abaixo:</p>
+        <label><input type="checkbox"> Hipertensão arterial sistêmica (Pressão alta)</label>
+        <label><input type="checkbox"> Diabetes mellitus tipo 2 (DM2)</label>
+        <label><input type="checkbox"> Apneia obstrutiva do sono</label>
+        <label><input type="checkbox"> Dislipidemias graves (alteração no colesterol)</label>
+        <label><input type="checkbox"> Esteatose hepática (gordura no fígado)</label>
+        <label><input type="checkbox"> Doenças articulares severas relacionadas à obesidade (como osteoartrite)</label>
+        <label><input type="checkbox"> Doenças cardiovasculares associadas ao excesso de peso</label>
+        <p>Além disso, é necessário ter falhado no controle do peso após tentativas de tratamento clínico (como dieta, atividade física, terapia comportamental ou medicamentos).</p>
+    </div>
+
+    <p class="disclaimer">
+        Observação: Os critérios citados acima para a realização da cirurgia bariátrica são baseados em diretrizes médicas amplamente aceitas, como as da Sociedade Brasileira de Cirurgia Bariátrica e Metabólica (SBCBM) e National Institutes of Health (NIH). Esses critérios levam em conta o Índice de Massa Corporal (IMC), as comorbidades associadas e a avaliação global do paciente.
+    </p>
+
+    <script>
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById("peso").value);
+            const altura = parseFloat(document.getElementById("altura").value);
+            const resultado = document.getElementById("resultado");
+            const criterios = document.getElementById("criterios");
+
+            if (!peso || !altura) {
+                resultado.innerHTML = "<p style='color: red;'>Por favor, preencha ambos os campos corretamente.</p>";
+                return;
+            }
+
+            const imc = peso / (altura * altura);
+            resultado.innerHTML = `<p>Seu IMC é <strong>${imc.toFixed(2)}</strong>.</p>`;
+
+            if (imc >= 40) {
+                resultado.innerHTML += "<p><strong>Você já tem critério para a cirurgia devido ao IMC (Obesidade Grau III).</strong></p>";
+                criterios.style.display = "none";
+            } else if (imc >= 35 && imc < 40) {
+                resultado.innerHTML += "<p>Seu IMC está entre 35 e 39,9 kg/m². Confira os critérios adicionais abaixo:</p>";
+                criterios.style.display = "block";
+            } else {
+                resultado.innerHTML += "<p>Seu IMC não atende aos critérios iniciais para cirurgia bariátrica.</p>";
+                criterios.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
